@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AppMapsCamera</string>
+    <string name="descricao_foto_local">Foto do local</string>
+    <string name="google_maps_key">${MAPS_API_KEY}</string>
+</resources>

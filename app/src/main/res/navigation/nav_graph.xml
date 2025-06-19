@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.appmapscamera.ui.HomeFragment"
+        android:label="Locais" >
+        <action
+            android:id="@+id/action_homeFragment_to_adicionarFotoFragment"
+            app:destination="@id/adicionarFotoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adicionarLocalizacaoFragment"
+        android:name="com.example.appmapscamera.ui.AdicionarLocalizacaoFragment"
+        android:label="Adicionar Local" />
+
+    <fragment
+        android:id="@+id/adicionarFotoFragment"
+        android:name="com.example.appmapscamera.ui.AdicionarFotoFragment"
+        android:label="Fotos do Local">
+        <argument
+            android:name="localName"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.appmapscamera.ui.MapsFragment"
+        android:label="Google Maps" />
+</navigation>

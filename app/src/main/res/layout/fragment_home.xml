@@ -1,0 +1,33 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!-- Você pode adicionar ViewModel futuramente se quiser -->
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".ui.HomeFragment">
+
+        <!-- Mensagem de lista vazia -->
+        <TextView
+            android:id="@+id/text_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nenhum local cadastrado até o momento!"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:padding="16dp"
+            android:textColor="?android:textColorSecondary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_local" />
+    </LinearLayout>
+</layout>

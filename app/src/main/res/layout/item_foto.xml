@@ -1,0 +1,20 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!-- Se estiver usando ViewModel, adicione a variável aqui -->
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/foto_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/descricao_foto_local"
+            android:background="@drawable/foto_background"/>
+    </FrameLayout>
+</layout>
