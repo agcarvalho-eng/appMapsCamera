@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <!-- DataBinding variables if needed -->
+
     </data>
 
     <LinearLayout
