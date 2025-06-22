@@ -13,7 +13,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome do Local">
+            android:hint="@string/nome_do_local">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textNome"
@@ -24,7 +24,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Raio (metros)">
+            android:hint="@string/raio_metros">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textRaio"
@@ -37,13 +37,13 @@
             android:id="@+id/textCoordenadas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Buscando coordenadas..."
+            android:text="@string/buscando_coordenadas"
             android:paddingTop="8dp"
             android:textAppearance="?attr/textAppearanceBody2" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSalvar"
-            android:text="Salvar"
+            android:text="@string/salvar1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

@@ -1,33 +1,34 @@
 package com.example.appmapscamera.repository;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
-
-import androidx.core.content.FileProvider;
-
 import com.example.appmapscamera.model.Local;
 import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe responsável por gerenciar a persistência de dados relacionada aos objetos {@link Local}.
+ * Armazena e recupera arquivos no armazenamento externo público (em formato JSON).
+ */
 public class LocalRepository {
 
     private static final String TAG = "LocalRepository";
+
+    /** Caminho base onde os dados dos locais serão armazenados no diretório de documentos públicos. */
     private static final String BASE_DIR = Environment.getExternalStoragePublicDirectory(
             Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/Locais/";
 
+    /**
+     * Retorna o diretório base para armazenamento dos locais.
+     * Se o diretório não existir, ele será criado.
+     * @return Objeto {@link File} apontando para o diretório base.
+     */
     public static File getBaseDir() {
         File dir = new File(BASE_DIR);
         if (!dir.exists()) {
@@ -39,6 +40,12 @@ public class LocalRepository {
         return dir;
     }
 
+    /**
+     * Salva as informações de um {@link Local} em um arquivo JSON dentro de um subdiretório específico.
+     * O nome do diretório é baseado no nome do local.
+     * @param context Contexto da aplicação (não usado diretamente, mas mantido para futuras extensões).
+     * @param local   Objeto {@link Local} a ser salvo.
+     */
     public static void salvarLocal(Context context, Local local) {
         File dir = new File(BASE_DIR + local.getNome());
         if (!dir.exists()) {
@@ -59,6 +66,11 @@ public class LocalRepository {
         }
     }
 
+    /**
+     * Recupera todos os locais salvos no diretório base.
+     * Os dados são lidos de arquivos "metadata.json" contidos nos subdiretórios.
+     * @return Lista de objetos {@link Local} recuperados dos arquivos.
+     */
     public static List<Local> getTodosLocais() {
         List<Local> locals = new ArrayList<>();
         File baseDir = getBaseDir();
@@ -83,44 +95,5 @@ public class LocalRepository {
         }
 
         return locals;
-    }
-
-    public static List<String> getFotosPorLocal(String localName) {
-        File dir = new File(BASE_DIR + localName + "/picture");
-        List<String> fotos = new ArrayList<>();
-
-        Log.d(TAG, "Buscando fotos no diretório: " + dir.getAbsolutePath());
-
-        if (dir.exists()) {
-            File[] files = dir.listFiles();
-            if (files != null) {
-                for (File f : files) {
-                    if (f.getName().endsWith(".jpg")) {
-                        fotos.add(f.getAbsolutePath());
-                        Log.d(TAG, "Foto encontrada: " + f.getAbsolutePath());
-                    }
-                }
-            }
-        }
-
-        return fotos;
-    }
-
-    public static Uri salvarFoto(Context context, String localName, File photoFile) {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, photoFile.getName());
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        values.put(MediaStore.Images.Media.RELATIVE_PATH, "Documents/Locais/" + localName + "/picture");
-
-        Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        if (uri != null) {
-            try (OutputStream outputStream = context.getContentResolver().openOutputStream(uri)) {
-                Files.copy(photoFile.toPath(), outputStream);
-                Log.d(TAG, "Foto salva em: " + uri.toString());
-            } catch (IOException e) {
-                Log.e(TAG, "Erro ao salvar foto: " + e.getMessage());
-            }
-        }
-        return uri;
     }
 }

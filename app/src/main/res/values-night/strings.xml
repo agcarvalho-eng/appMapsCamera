@@ -1,14 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AppMapsCamera</string>
-    <string name="descricao_foto_local">Foto do local</string>
-    <string name="google_maps_key">${MAPS_API_KEY}</string>
     <string name="tirar_foto">Tirar Foto</string>
     <string name="nome_do_local">Nome do Local</string>
     <string name="raio_metros">Raio (metros)</string>
     <string name="buscando_coordenadas">Buscando coordenadas...</string>
-    <string name="salvar1">Salvar</string>
     <string name="nenhum_local_cadastrado_at_o_momento">Nenhum local cadastrado até o momento!</string>
     <string name="home">Home</string>
-    <string name="novo_local">Novo Local</string>
     <string name="google_maps">Google Maps</string>
 </resources>

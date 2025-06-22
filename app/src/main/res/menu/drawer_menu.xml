@@ -1,15 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/homeFragment"
-        android:title="Home"
-        android:icon="@android:drawable/ic_menu_myplaces" />
+        android:title="@string/home"
+        android:icon="@drawable/home" />
     <item
         android:id="@+id/adicionarLocalizacaoFragment"
-        android:title="Novo Local"
-        android:icon="@android:drawable/ic_menu_add" />
+        android:title="@string/novo_local"
+        android:icon="@drawable/local" />
     <item
         android:id="@+id/mapsFragment"
-        android:title="Google Maps"
-        android:icon="@android:drawable/ic_dialog_map" />
+        android:title="@string/google_maps"
+        android:icon="@drawable/maps" />
 
 </menu>

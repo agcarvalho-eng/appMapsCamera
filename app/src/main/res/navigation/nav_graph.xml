@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.appmapscamera.ui.HomeFragment"
-        android:label="Locais" >
+        android:label="Cadastrando locais" >
         <action
             android:id="@+id/action_homeFragment_to_adicionarFotoFragment"
             app:destination="@id/adicionarFotoFragment" />

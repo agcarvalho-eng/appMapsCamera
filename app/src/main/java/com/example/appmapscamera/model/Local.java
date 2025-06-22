@@ -2,6 +2,9 @@ package com.example.appmapscamera.model;
 
 import java.util.List;
 
+/**
+ * Classe que representa um local geográfico com nome, coordenadas, raio de alcance e fotos associadas.
+ */
 public class Local {
     private String nome;
     private double latitude;
@@ -9,10 +12,21 @@ public class Local {
     private int raio;
     private List<String> enderecoFotos;
 
+    /**
+     * Construtor padrão da classe Local.
+     * Inicializa o objeto sem definir valores para os atributos.
+     */
     public Local() {
     }
 
-
+    /**
+     * Construtor que inicializa o local com nome, raio, latitude e longitude.
+     *
+     * @param nome      Nome do local.
+     * @param raio      Raio de alcance ao redor do local, em metros.
+     * @param latitude  Latitude do local.
+     * @param longitude Longitude do local.
+     */
     public Local(String nome, int raio, double latitude, double longitude) {
         this.nome = nome;
         this.raio = raio;

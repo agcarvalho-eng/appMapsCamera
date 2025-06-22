@@ -16,7 +16,7 @@
             android:id="@+id/text_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nenhum local cadastrado até o momento!"
+            android:text="@string/nenhum_local_cadastrado_at_o_momento"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textAlignment="center"
             android:visibility="gone"
