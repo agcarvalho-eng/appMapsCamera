@@ -72,7 +72,7 @@ public class LocalRepository {
      * @return Lista de objetos {@link Local} recuperados dos arquivos.
      */
     public static List<Local> getTodosLocais() {
-        List<Local> locals = new ArrayList<>();
+        List<Local> locais = new ArrayList<>();
         File baseDir = getBaseDir();
 
         Log.d(TAG, "Buscando locais em: " + baseDir.getAbsolutePath());
@@ -85,7 +85,7 @@ public class LocalRepository {
                 if (metadata.exists()) {
                     try (FileReader reader = new FileReader(metadata)) {
                         Local local = gson.fromJson(reader, Local.class);
-                        locals.add(local);
+                        locais.add(local);
                         Log.d(TAG, "Local carregado: " + local.getNome() + " de " + metadata.getAbsolutePath());
                     } catch (IOException e) {
                         Log.e(TAG, "Erro ao ler metadata: " + metadata.getAbsolutePath(), e);
@@ -94,6 +94,6 @@ public class LocalRepository {
             }
         }
 
-        return locals;
+        return locais;
     }
 }

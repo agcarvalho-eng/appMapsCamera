@@ -6,10 +6,11 @@ import android.view.*;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.appmapscamera.R;
+import com.example.appmapscamera.databinding.FragmentMapsBinding;
 import com.example.appmapscamera.model.Local;
 import com.example.appmapscamera.viewModel.MapsViewModel;
 import com.google.android.gms.maps.*;
@@ -25,6 +26,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private MapsViewModel viewModel;
+    private FragmentMapsBinding binding;
+    //private FragmentMapsBinding binding;
 
     /**
      * Construtor que define o layout do fragmento como {@code fragment_maps}.
@@ -40,7 +43,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        // Inicializa o binding e infla o layout usando o root da view
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_maps, container, false);
+        return binding.getRoot();
     }
 
     /**
@@ -48,19 +53,33 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        // Chama a implementação da superclasse para garantir que o ciclo de vida do fragmento continue corretamente
         super.onViewCreated(view, savedInstanceState);
 
+        // Inicializa o ViewModel associado a este fragmento
         viewModel = new ViewModelProvider(this).get(MapsViewModel.class);
 
+        // Conecta o ViewModel ao layout por meio do Data Binding
+        binding.setViewModel(viewModel);
+
+        // Define o ciclo de vida do binding para que ele observe corretamente os LiveData
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        // Recupera o fragmento de mapa declarado no XML pelo seu ID
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map);
 
+        // Se o fragmento de mapa foi encontrado corretamente...
         if (mapFragment != null) {
+            // ...solicita para ser notificado quando o mapa estiver pronto para uso
             mapFragment.getMapAsync(this);
         } else {
+            // Caso contrário, registra um erro no log
             Log.e("MapsFragment", "Erro ao carregar o fragmento do mapa.");
         }
     }
+
+
 
     /**
      * Callback chamado quando o mapa estiver pronto.
@@ -69,6 +88,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
+        // Observa os locais e os mostra no mapa
         viewModel.getLocais().observe(getViewLifecycleOwner(), this::mostrarLocais);
         viewModel.carregarLocais();
     }

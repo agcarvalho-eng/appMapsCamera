@@ -40,7 +40,7 @@ public class AdicionarLocalizacaoFragment extends Fragment {
     /**
      * Launcher utilizado para solicitar permissões de localização em tempo de execução.
      */
-    private final ActivityResultLauncher<String> locationPermissionRequest =
+    private final ActivityResultLauncher<String> requisicaoPermissaoLocalizacao =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
                     viewModel.iniciarLocalizacao(); // Inicia a busca por localização
@@ -80,9 +80,9 @@ public class AdicionarLocalizacaoFragment extends Fragment {
         solicitarPermissaoLocalizacao();
 
         // Observa coordenadas e atualiza a UI quando disponíveis
-        viewModel.getCoordenadas().observe(getViewLifecycleOwner(), location -> {
-            if (location != null) {
-                String texto = "Lat: " + location.getLatitude() + " | Lng: " + location.getLongitude();
+        viewModel.getCoordenadas().observe(getViewLifecycleOwner(), localizacao -> {
+            if (localizacao != null) {
+                String texto = "Lat: " + localizacao.getLatitude() + " | Lng: " + localizacao.getLongitude();
                 binding.textCoordenadas.setText(texto);
             }
         });
@@ -115,7 +115,7 @@ public class AdicionarLocalizacaoFragment extends Fragment {
     private void solicitarPermissaoLocalizacao() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            locationPermissionRequest.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+            requisicaoPermissaoLocalizacao.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         } else {
             viewModel.iniciarLocalizacao();
         }

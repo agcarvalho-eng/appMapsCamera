@@ -1,14 +1,11 @@
 package com.example.appmapscamera.viewModel;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -26,7 +23,7 @@ public class AdicionarLocalizacaoViewModel extends AndroidViewModel {
     /**
      * Cliente para acessar a API de localização do Google.
      */
-    private final FusedLocationProviderClient locationProviderClient;
+    private final FusedLocationProviderClient fusedLocationClient;
 
     /**
      * Callback chamado quando a localização é atualizada.
@@ -45,7 +42,7 @@ public class AdicionarLocalizacaoViewModel extends AndroidViewModel {
 
     public AdicionarLocalizacaoViewModel(@NonNull Application application) {
         super(application);
-        locationProviderClient = LocationServices.getFusedLocationProviderClient(application);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(application);
     }
 
     /**
@@ -71,42 +68,59 @@ public class AdicionarLocalizacaoViewModel extends AndroidViewModel {
      */
     @SuppressLint("MissingPermission")
     public void iniciarLocalizacao() {
+        // Cria uma solicitação de localização com configurações padrão
         LocationRequest request = LocationRequest.create();
-        request.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
-        request.setInterval(5000);
 
+        // Define a prioridade da solicitação para alta precisão (usa GPS se possível)
+        request.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
+
+        // Define o intervalo desejado entre atualizações de localização (em milissegundos)
+        request.setInterval(5000); // 5 segundos
+
+        // Define o callback que será chamado quando novas localizações forem recebidas
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
+                // Obtém a última localização recebida
                 Location ultima = locationResult.getLastLocation();
+
                 if (ultima != null) {
+                    // Atualiza o LiveData com a nova localização
                     coordenadas.setValue(ultima);
-                    // Parar as atualizações após obter uma localização
-                    locationProviderClient.removeLocationUpdates(locationCallback);
+
+                    // Interrompe futuras atualizações de localização após obter a primeira válida
+                    fusedLocationClient.removeLocationUpdates(locationCallback);
                 }
             }
 
             @Override
             public void onLocationAvailability(@NonNull LocationAvailability availability) {
+                // Verifica se a localização está disponível
                 if (!availability.isLocationAvailable()) {
+                    // Notifica que a localização não está disponível no momento
                     mensagem.setValue("Localização indisponível no momento");
                 }
             }
         };
 
-        locationProviderClient.requestLocationUpdates(
+        // Inicia a solicitação de atualizações de localização
+        // - request: configurações da requisição
+        // - locationCallback: onde serão recebidas as localizações
+        // - Looper.getMainLooper(): garante que o callback rode na thread principal (UI)
+        fusedLocationClient.requestLocationUpdates(
                 request,
                 locationCallback,
                 Looper.getMainLooper()
         );
     }
 
+
     /**
      * Cancela as atualizações de localização, geralmente chamado ao destruir a view.
      */
     public void pararLocalizacao() {
         if (locationCallback != null) {
-            locationProviderClient.removeLocationUpdates(locationCallback);
+            fusedLocationClient.removeLocationUpdates(locationCallback);
         }
     }
 
