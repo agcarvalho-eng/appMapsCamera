@@ -11,6 +11,12 @@
         <action
             android:id="@+id/action_homeFragment_to_adicionarFotoFragment"
             app:destination="@id/adicionarFotoFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_adicionarLocalizacaoFragment"
+            app:destination="@id/adicionarLocalizacaoFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
 
     <fragment
