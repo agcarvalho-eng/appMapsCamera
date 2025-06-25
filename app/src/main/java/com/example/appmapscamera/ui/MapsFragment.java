@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.example.appmapscamera.R;
 import com.example.appmapscamera.databinding.FragmentMapsBinding;
 import com.example.appmapscamera.model.Local;
@@ -91,6 +93,15 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         // Observa os locais e os mostra no mapa
         viewModel.getLocais().observe(getViewLifecycleOwner(), this::mostrarLocais);
         viewModel.carregarLocais();
+
+        // Configura o evento de clique sobre os marcadores
+        mMap.setOnMarkerClickListener(marker -> {
+            String nomeLocal = marker.getTitle();
+            MapsFragmentDirections.ActionMapsFragmentToListaDeFotosFragment action =
+                    MapsFragmentDirections.actionMapsFragmentToListaDeFotosFragment(nomeLocal);
+            NavHostFragment.findNavController(this).navigate(action);
+            return true;
+        });
     }
 
     /**

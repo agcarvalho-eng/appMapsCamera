@@ -36,5 +36,17 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.appmapscamera.ui.MapsFragment"
-        android:label="Google Maps" />
+        android:label="Google Maps" >
+    <action
+        android:id="@+id/action_mapsFragment_to_listaDeFotosFragment"
+        app:destination="@id/listaDeFotosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listaDeFotosFragment"
+        android:name="com.example.appmapscamera.ui.ListaDeFotosFragment"
+        android:label="Fotos do Local" >
+        <argument
+            android:name="localName"
+            app:argType="string" />
+    </fragment>
 </navigation>
