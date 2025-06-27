@@ -18,8 +18,8 @@ public class ListaDeFotosViewModel extends ViewModel {
         return fotos;
     }
 
-    public void setLocalName(Context context, String localName) {
-        List<String> lista = FotoRepository.getTodasFotos(context, localName);
+    public void setNomeLocal(Context context, String nomeLocal) {
+        List<String> lista = FotoRepository.getTodasFotos(context, nomeLocal);
         fotos.setValue(lista);
     }
 }

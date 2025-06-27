@@ -46,7 +46,7 @@
         android:name="com.example.appmapscamera.ui.ListaDeFotosFragment"
         android:label="Fotos do Local" >
         <argument
-            android:name="localName"
+            android:name="nomeLocal"
             app:argType="string" />
     </fragment>
 </navigation>
